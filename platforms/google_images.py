@@ -32,11 +32,10 @@ def google_images(driver, name, intAmount):
     images = images[::2]
 
     print(f"[*] Gathering links...")
-    links = driver.find_elements(By.CSS_SELECTOR, "a.wXeWr") 
+    links = driver.find_elements(By.XPATH, "/html/body/div[3]/div/div[14]/div/div[2]/div[2]/div/div/div/div/div[1]/div/div/div/div[2]/h3/a") 
     image_links = []
     for link in tqdm(links, desc="Gathering Links"):
         image_links.append(link.get_attribute("href"))
-
     print(f"[*] Downloading profile photos...")
     for i, image_url in tqdm(enumerate(images), desc="Downloading Photos", total=len(images)):
         try:
