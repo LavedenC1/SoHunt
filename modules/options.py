@@ -8,7 +8,7 @@ class targetOptions:
 class platformOptions:
     def __init__(self):
         self.facebook = True
-        self.google_images = False
+        self.google_images = True
         self.duckduckgo = True
 
 

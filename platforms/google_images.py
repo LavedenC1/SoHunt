@@ -32,10 +32,10 @@ def google_images(driver, name, intAmount):
     images = images[::2]
 
     print(f"[*] Gathering links...")
-    links = driver.find_elements(By.XPATH, "/html/body/div[3]/div/div[14]/div/div[2]/div[2]/div/div/div/div/div[1]/div/div/div/div[2]/h3/a") 
+    links = driver.find_elements(By.XPATH, "/html/body/div[3]/div/div[14]/div/div[2]/div[2]/div/div/div/div/div[1]/div/div/div") 
     image_links = []
     for link in tqdm(links, desc="Gathering Links"):
-        image_links.append(link.get_attribute("href"))
+        image_links.append(link.get_attribute("data-lpage"))
     print(f"[*] Downloading profile photos...")
     for i, image_url in tqdm(enumerate(images), desc="Downloading Photos", total=len(images)):
         try:
@@ -48,52 +48,49 @@ def google_images(driver, name, intAmount):
                 # Decode base64 content
                 image_data = base64.b64decode(encoded)
                 
-                # Save the file
                 with open(f"gg_downloads/{i}.{file_extension}", "wb") as f:
                     f.write(image_data)
             else:
-                # Handle regular URL
                 parsed_url = urlparse(image_url)
                 file_extension = os.path.splitext(parsed_url.path)[1]
                 if not file_extension:
-                    file_extension = '.jpg'  # Default to .jpg if no extension found
+                    file_extension = '.jpg'
                 
                 download_file(image_url, f"gg_downloads/{i}{file_extension}")
         except Exception as e:
             print(f"Error downloading image {i}: {str(e)}")
 
 
-    # known_pics = lsDir("known")
+    known_pics = lsDir("known")
 
-    # print("[*] Starting face recognition")
-    # for known_pic in known_pics:
-    #     picResults = []
-    #     try:
-    #         recPic = face_recognition.load_image_file("known/" + known_pic)
-    #         recPicEncocing = face_recognition.face_encodings(recPic)[0]
-    #     except:
-    #         print("No Face Detected")
-    #         break
-    #     files = sorted(lsDir("fb_downloads"), key=lambda x: int(x.split(".")[0]))
-    #     for propic in tqdm(files, desc="Recognizing"):
-    #         try:
-    #             recUnk = face_recognition.load_image_file("fb_downloads/" + propic)
-    #             recUnkEncoding = face_recognition.face_encodings(recUnk)[0]
-    #             results = face_recognition.compare_faces([recPicEncocing], recUnkEncoding)
-    #             if results[0] == True:
-    #                 picResults.append(propic)
-    #             else:
-    #                 picResults.append("X")
-    #                 continue
-    #         except:
-    #             print("No Face Detected")
-    #             picResults.append("X")
-    #     print("-" * 40)
-    #     print(f"{Fore.RED}{Style.BRIGHT}Potential Results:{Style.RESET_ALL}")
-    #     c = 0
-    #     for i in picResults:
-    #         if i != "X":
-    #             print("-" * 40)
-    #             print(f"{Fore.GREEN}" + profile_links[c] + f"{Style.RESET_ALL}")
-    #         c += 1
-    #     print("-" * 40)
+    print("[*] Starting face recognition")
+    for known_pic in known_pics:
+        picResults = []
+        try:
+            recPic = face_recognition.load_image_file("known/" + known_pic)
+            recPicEncocing = face_recognition.face_encodings(recPic)[0]
+        except:
+            print("No Face Detected")
+            break
+        files = sorted(lsDir("gg_downloads"), key=lambda x: int(x.split(".")[0]))
+        for propic in tqdm(files, desc="Recognizing"):
+            try:
+                recUnk = face_recognition.load_image_file("gg_downloads/" + propic)
+                recUnkEncoding = face_recognition.face_encodings(recUnk)[0]
+                results = face_recognition.compare_faces([recPicEncocing], recUnkEncoding)
+                if results[0] == True:
+                    picResults.append(propic)
+                else:
+                    picResults.append("X")
+                    continue
+            except:
+                picResults.append("X")
+        print("-" * 40)
+        print(f"{Fore.RED}{Style.BRIGHT}Potential Results:{Style.RESET_ALL}")
+        c = 0
+        for i in picResults:
+            if i != "X":
+                print("-" * 40)
+                print(f"{Fore.GREEN}" + image_links[c] + f"{Style.RESET_ALL}")
+            c += 1
+        print("-" * 40)
