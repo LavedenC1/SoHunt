@@ -9,7 +9,7 @@ git clone https://github.com/LavedenC1/SoHunt
 ```
 Next, install all dependencies,
 ```bash
-pip intall -r requirements.txt
+pip3 install -r requirements.txt
 ```
 > It is recommended to create a venv
 
@@ -18,13 +18,38 @@ Now you need to install geckodriver.
 2. Download the binary suitable for your machine.
 3. Then make it available globally `sudo mv geckodriver /usr/local/bin ` or depending on your PATH
 ## Usage
-1.Put pictures of your target in the known folder
+1. **Put pictures of your target in the known/ directory**
 2. Run SoHunt
-To run SoHunt, run
 ```bash
-python main.py
+python3 main.py
 ```
 > Make sure to use python 3
-> Also only facebook is currently supported
-
+> Only Facebook, Google Images, and DuckDuckGo are currently supported
+## Inside SoHunt
+Get commands:
+```
+$ help
+```
+View options:
+```
+$ options
+```
+Start the OSINTing:
+```
+$ start
+```
+### Examples
+To set the target's name
+```
+$ set target.name John Doe
+```
+Get the target's name:
+```
+$ get target.name
+```
+Start the scraping
+```
+$ start
+```
+<hr>
 Thank you, more features to come later.

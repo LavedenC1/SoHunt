@@ -60,7 +60,9 @@ settings = settingsOptions()
 while True:
     try:
         cmd = input(f"{Fore.RED}${Style.RESET_ALL} ").split()
-        if cmd[0] == "help":
+        if len(cmd) == 0:
+            continue
+        elif cmd[0] == "help":
             print(f"{Fore.RED}Welcome to SoHunt!{Style.RESET_ALL}")
             print("Available commands:")
             print(f"{Style.BRIGHT}help{Style.RESET_ALL} - Display this help message")
@@ -94,6 +96,8 @@ while True:
                             print(f"{Fore.RED}Phone number: {Style.RESET_ALL}{target.number}")
                         elif key == "continent":
                             print(f"{Fore.RED}Continent: {Style.RESET_ALL}{target.continent}")
+                        else:
+                            print(f"{Fore.RED}Invalid key. Use `options` for available keys in the 'target' group.{Style.RESET_ALL}")
                     elif group == "platform":
                         if key == "facebook":
                             print(f"{Fore.RED} Use Facebook: {Style.RESET_ALL}{platform.facebook}")
@@ -101,11 +105,15 @@ while True:
                             print(f"{Fore.RED}Use Google Images: {Style.RESET_ALL}{platform.google_images}")
                         elif key == "duckduckgo":
                             print(f"{Fore.RED}Use DuckDuckGo: {Style.RESET_ALL}{platform.duckduckgo}")
+                        else:
+                            print(f"{Fore.RED}Invalid key. Use `options` for available keys in the 'target' group.{Style.RESET_ALL}")
                     elif group == "settings":
                         if key == "scroll_time":
                             print(f"{Fore.RED}Scroll time: {Style.RESET_ALL}{settings.scroll_time}")
                         elif key == "headless":
-                            print(f"{Fore.RED}Headless: {Style.RESET_ALL}{'Yes' if settings.headless else 'No'}")
+                            print(f"{Fore.RED}Headless: {Style.RESET_ALL}{settings.headless}")
+                        else:
+                            print(f"{Fore.RED}Invalid key. Use `options` for available keys in the 'target' group.{Style.RESET_ALL}")
             except:
                 print(f"{Fore.RED}Invalid group or key. Use `options` for available groups and keys.{Style.RESET_ALL}")
         elif cmd[0] == "set":
@@ -122,6 +130,8 @@ while True:
                             target.number = value
                         elif key == "continent":
                             target.continent = value
+                        else:
+                            print(f"{Fore.RED}Invalid key. Use `options` for available keys in the 'target' group.{Style.RESET_ALL}")
                     elif group == "platform":
                         if key == "facebook":
                             platform.facebook = True if value.lower() == "true" else False
@@ -129,11 +139,15 @@ while True:
                             platform.google_images = True if value.lower() == "true" else False
                         elif key == "duckduckgo":
                             platform.duckduckgo = True if value.lower() == "true" else False
+                        else:
+                            print(f"{Fore.RED}Invalid key. Use `options` for available keys in the 'target' group.{Style.RESET_ALL}")
                     elif group == "settings":
                         if key == "scroll_time":
                             settings.scroll_time = int(value)
                         elif key == "headless":
                             settings.headless = True if value.lower() == "true" else False
+                        else:
+                            print(f"{Fore.RED}Invalid key. Use `options` for available keys in the 'target' group.{Style.RESET_ALL}")
                     else:
                         print(f"{Fore.RED}Invalid group. Use `options` for available groups.{Style.RESET_ALL}")
             except:
@@ -156,7 +170,9 @@ while True:
                 print(f"------ {Fore.YELLOW}DuckDuckGo{Style.RESET_ALL} ------")
                 duckduckgo(driver, target.name, settings.scroll_time)
             driver.quit()
-        elif cmd[0] == "exit":
+        elif cmd[0] == "clear":
+            os.system('cls' if os.name == 'nt' else 'clear')
+        elif cmd[0] == "exit" or cmd[0] == "quit":
             print(f"{Fore.RED}Exiting SoHunt...{Style.RESET_ALL}")
             sys.exit(0)
         else:
