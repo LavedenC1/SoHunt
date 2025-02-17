@@ -69,6 +69,7 @@ while True:
             print(f"{Style.BRIGHT}get <group>.<key>{Style.RESET_ALL} - Get a configuration value (run `options` for groups and keys)")
             print(f"{Style.BRIGHT}set <group>.<key> <value>{Style.RESET_ALL} - Set a configuration value (run `options` for groups and keys)")
             print(f"{Style.BRIGHT}options{Style.RESET_ALL} - Display available configuration options")
+            print(f"{Style.BRIGHT}clean{Style.RESET_ALL} - Remove all downloaded files")
             print(f"{Style.BRIGHT}start{Style.RESET_ALL} - Start searching for profiles")
         elif cmd[0] == "options":
             print(f"{Fore.RED}Available configuration options:{Style.RESET_ALL}")
@@ -175,6 +176,15 @@ while True:
         elif cmd[0] == "exit" or cmd[0] == "quit":
             print(f"{Fore.RED}Exiting SoHunt...{Style.RESET_ALL}")
             sys.exit(0)
+        elif cmd[0] == "clean":
+            for x in lsDir("fb_downloads"):
+                os.remove(os.path.join("fb_downloads", x))
+
+            for x in lsDir("gg_downloads"):
+                os.remove(os.path.join("gg_downloads", x))
+
+            for x in lsDir("ddg_downloads"):
+                os.remove(os.path.join("ddg_downloads", x))
         else:
             print(f"{Fore.RED}Invalid command. Use `help` for available commands.{Style.RESET_ALL}")
     except KeyboardInterrupt:

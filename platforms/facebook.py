@@ -5,6 +5,7 @@ import face_recognition
 from modules.download_file import download_file
 from modules.lsDir import lsDir
 import time
+import os
 from colorama import Fore, Style, init
 
 def facebook(driver, name, intAmount):
@@ -59,7 +60,6 @@ def facebook(driver, name, intAmount):
                     picResults.append("X")
                     continue
             except:
-                print("No Face Detected")
                 picResults.append("X")
         print("-" * 40)
         print(f"{Fore.RED}{Style.BRIGHT}Potential Results:{Style.RESET_ALL}")
