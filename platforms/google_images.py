@@ -25,18 +25,18 @@ def google_images(driver, name, intAmount):
         time.sleep(1)
 
     print(f"[*] Gathering profile photos...")
-    image_elements = driver.find_elements(By.CSS_SELECTOR, "div.eA0Zlc img")
+    image_elements = driver.find_elements(By.XPATH, "/html/body/div[3]/div/div[14]/div/div[2]/div[2]/div/div/div/div/div[1]/div/div/div/div[2]/h3/a/div/div/div/g-img/img")
     images = []
     for profile in tqdm(image_elements,desc="Gathering Photos"):
         images.append(profile.get_attribute("src"))
-    images = images[::2]
+    
 
     print(f"[*] Gathering links...")
     links = driver.find_elements(By.XPATH, "/html/body/div[3]/div/div[14]/div/div[2]/div[2]/div/div/div/div/div[1]/div/div/div") 
     image_links = []
     for link in tqdm(links, desc="Gathering Links"):
         image_links.append(link.get_attribute("data-lpage"))
-    print(f"[*] Downloading profile photos...")
+    print(f"[*] Downloading photos...")
     for i, image_url in tqdm(enumerate(images), desc="Downloading Photos", total=len(images)):
         try:
             if image_url.startswith('data:'):

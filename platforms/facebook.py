@@ -30,7 +30,7 @@ def facebook(driver, name, intAmount):
     links = driver.find_elements(By.CLASS_NAME, "_32mo")
     profile_links = []
     for link in tqdm(links, desc="Gathering Links"):
-        profile_links.append(link.get_attribute("href"))
+       profile_links.append(link.get_attribute("href"))
 
     print(f"[*] Downloading profile photos...")
     for i in tqdm(range(len(profile_photos)), desc="Downloading Photos"):

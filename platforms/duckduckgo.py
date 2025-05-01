@@ -24,8 +24,8 @@ def duckduckgo(driver, name, intAmount):
         ActionChains(driver).scroll_by_amount(0, 10000).perform()
         time.sleep(1)
 
-    print(f"[*] Gathering profile photos...")
-    image_elements = driver.find_elements(By.XPATH, '//*[@id="zci-images"]/div/div[2]/div[2]/div/div[1]/span/img')
+    print(f"[*] Gathering photos...")
+    image_elements = driver.find_elements(By.XPATH, '/html/body/div[2]/div[6]/div[4]/div/div[2]/div/div[2]/section/ol/li[1]/ol/li/figure/div/img')
     images = []
     for profile in tqdm(image_elements,desc="Gathering Photos"):
         text = profile.get_attribute("src")
@@ -35,7 +35,7 @@ def duckduckgo(driver, name, intAmount):
         images.append(url)
 
     print(f"[*] Gathering links...")
-    links = driver.find_elements(By.XPATH, '//*[@id="zci-images"]/div[1]/div[2]/div[2]/div/a') 
+    links = driver.find_elements(By.XPATH, '/html/body/div[2]/div[6]/div[4]/div/div[2]/div/div[2]/section/ol/li[1]/ol/li/figure/figcaption/a') 
     image_links = []
     for link in tqdm(links, desc="Gathering Links"):
         image_links.append(link.get_attribute("href"))
